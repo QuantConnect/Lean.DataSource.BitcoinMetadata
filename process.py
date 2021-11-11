@@ -39,7 +39,7 @@ def download_blockchain_nasdaq():
     data = {}
 
     # Create CSV, save as bitcoin data
-    with open(destination_folder / "blockchainbitcoindata.csv", "w") as csv_file:
+    with open(destination_folder / "btcusd.csv", "w") as csv_file:
 
         for data_name, data_code in Dict.items():
 
