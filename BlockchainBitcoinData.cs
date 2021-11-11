@@ -24,10 +24,10 @@ using System.Collections.Generic;
 namespace QuantConnect.DataSource
 {
     /// <summary>
-    /// Blockchain Bitcoin dataset
+    /// Blockchain Bitcoin Metadata dataset
     /// </summary>
     [ProtoContract(SkipConstructor = true)]
-    public class BlockchainBitcoinData : BaseData
+    public class BitcoinMetadata : BaseData
     {
         /// <summary>
         /// A relative measure of how difficult it is to find a new block. The difficulty is adjusted periodically as a function of how much hashing power has been deployed by the network of miners.
@@ -200,7 +200,7 @@ namespace QuantConnect.DataSource
             var csv = line.Split(',');
 
             var parsedDate = Parse.DateTimeExact(csv[0], "yyyy-MM-dd");
-            return new BlockchainBitcoinData()
+            return new BitcoinMetadata()
             {
                 Symbol = config.Symbol,
                 Difficulty = decimal.Parse(csv[1], System.Globalization.NumberStyles.Float),
@@ -237,7 +237,7 @@ namespace QuantConnect.DataSource
         /// <returns>A clone of the object</returns>
         public override BaseData Clone()
         {
-            return new BlockchainBitcoinData()
+            return new BitcoinMetadata()
             {
                 Symbol = Symbol,
                 Time = Time,
