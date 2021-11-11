@@ -6,7 +6,7 @@ api = os.environ["QUANDL_API_KEY"]
 
 base_link = "https://data.nasdaq.com/api/v3/datasets/BCHAIN/"
 
-destination_folder = pathlib.Path('/temp-output-directory/alternative/blockchain')
+destination_folder = pathlib.Path('/temp-output-directory/alternative/blockchain/bitcoinmetadata')
 # objectives:# download data from API -> temp folder or in memory. Output processed data to /temp-output-directory/alternative/blockchain/symbol.csv
 destination_folder.mkdir(parents=True, exist_ok=True)
 
