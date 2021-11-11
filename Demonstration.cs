@@ -23,10 +23,10 @@ using QuantConnect.DataSource;
 namespace QuantConnect.DataLibrary.Tests
 {
     /// <summary>
-    /// Example algorithm using Blockchain Bitcoin data as a source of alpha
+    /// Example algorithm using Blockchain Bitcoin Metadata as a source of alpha
     /// In this algorithm, we're trading the supply-demand of the Bitcoin blockchain services will affect its price
     /// </summary>
-    public class BlockchainBitcoinDataAlgorithm : QCAlgorithm
+    public class BitcoinMetadataAlgorithm : QCAlgorithm
     {
         private Symbol _bitcoinDataSymbol;
         private Symbol _btcSymbol;
@@ -43,10 +43,10 @@ namespace QuantConnect.DataLibrary.Tests
 
             _btcSymbol = AddCrypto("BTCUSD", Resolution.Minute).Symbol; 
             // Requesting data
-            _bitcoinDataSymbol = AddData<BlockchainBitcoinData>(_btcSymbol).Symbol;
+            _bitcoinDataSymbol = AddData<BitcoinMetadata>(_btcSymbol).Symbol;
 
             // Historical data
-            var history = History<BlockchainBitcoinData>(_bitcoinDataSymbol, 60, Resolution.Daily);
+            var history = History<BitcoinMetadata>(_bitcoinDataSymbol, 60, Resolution.Daily);
             Debug($"We got {history.Count()} items from our history request for {_btcSymbol} Blockchain Bitcoin data");
         }
 
@@ -57,7 +57,7 @@ namespace QuantConnect.DataLibrary.Tests
         public override void OnData(Slice slice)
         {
             // Get data
-            var data = slice.Get<BlockchainBitcoinData>();
+            var data = slice.Get<BitcoinMetadata>();
             if (!data.IsNullOrEmpty())
             {
                 var currentDemandSupply = data[_bitcoinDataSymbol].NumberofTransactions / data[_bitcoinDataSymbol].HashRate;
