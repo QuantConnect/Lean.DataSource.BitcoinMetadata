@@ -87,7 +87,7 @@ namespace QuantConnect.DataLibrary.Tests
 
         private BaseData CreateNewInstance()
         {
-            return new BlockchainBitcoinData
+            return new BitcoinMetadata
             {
                 Symbol = Symbol.Empty,
                 Time = DateTime.Today,
