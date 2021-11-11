@@ -14,6 +14,10 @@
  *
 */
 
+using System.Linq;
+using QuantConnect.Data;
+using QuantConnect.Util;
+using QuantConnect.Algorithm;
 using QuantConnect.DataSource;
 
 namespace QuantConnect.DataLibrary.Tests
