@@ -1,4 +1,4 @@
-﻿/*
+/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
  *
@@ -87,12 +87,34 @@ namespace QuantConnect.DataLibrary.Tests
 
         private BaseData CreateNewInstance()
         {
-            return new MyCustomDataType
+            return new BitcoinMetadata
             {
                 Symbol = Symbol.Empty,
                 Time = DateTime.Today,
                 DataType = MarketDataType.Base,
-                SomeCustomProperty = "This is some market related information"
+                Difficulty = 100m,
+                MyWalletNumberofUsers = 10000m,
+                AverageBlockSize = 100m,
+                BlockchainSize = 300000m,
+                MedianTransactionConfirmationTime = 0.01m,
+                MinersRevenue = 10m,
+                HashRate = 20m,
+                CostPerTransaction = 0.01m,
+                CostPercentofTransactionVolume = 0.005m,
+                EstimatedTransactionVolumeUSD = 100000000m,
+                EstimatedTransactionVolume = 20000m,
+                TotalOutputVolume = 2000m,
+                NumberofTransactionperBlock = 100m,
+                NumberofUniqueBitcoinAddressesUsed = 50000m,
+                NumberofTransactionsExcludingPopularAddresses = 10000m,
+                TotalNumberofTransactions = 10000000m,
+                NumberofTransactions = 10000m,
+                TotalTransactionFeesUSD = 10000m,
+                TotalTransactionFees = 100m,
+                MarketCapitalization = 3000000000m,
+                TotalBitcoins = 21000000m,
+                MyWalletNumberofTransactionPerDay = 1000m,
+                MyWalletTransactionVolume = 1000m
             };
         }
     }

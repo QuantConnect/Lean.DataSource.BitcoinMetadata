@@ -1,4 +1,4 @@
-﻿/*
+/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
  *
@@ -14,31 +14,40 @@
  *
 */
 
+using System.Linq;
 using QuantConnect.Data;
 using QuantConnect.Util;
-using QuantConnect.Orders;
 using QuantConnect.Algorithm;
 using QuantConnect.DataSource;
 
 namespace QuantConnect.DataLibrary.Tests
 {
     /// <summary>
-    /// Example algorithm using the custom data type as a source of alpha
+    /// Example algorithm using Blockchain Bitcoin Metadata as a source of alpha
+    /// In this algorithm, we're trading the supply-demand of the Bitcoin blockchain services will affect its price
     /// </summary>
-    public class CustomDataAlgorithm : QCAlgorithm
+    public class BitcoinMetadataAlgorithm : QCAlgorithm
     {
-        private Symbol _customDataSymbol;
-        private Symbol _equitySymbol;
+        private Symbol _bitcoinDataSymbol;
+        private Symbol _btcSymbol;
+        private decimal? _lastDemandSupply = null;
 
         /// <summary>
         /// Initialise the data and resolution required, as well as the cash and start-end dates for your algorithm. All algorithms must initialized.
         /// </summary>
         public override void Initialize()
         {
-            SetStartDate(2013, 10, 07);  //Set Start Date
-            SetEndDate(2013, 10, 11);    //Set End Date
-            _equitySymbol = AddEquity("SPY").Symbol;
-            _customDataSymbol = AddData<MyCustomDataType>(_equitySymbol).Symbol;
+            SetStartDate(2020, 10, 07);  //Set Start Date
+            SetEndDate(2020, 10, 11);    //Set End Date
+            SetCash(100000);
+
+            _btcSymbol = AddCrypto("BTCUSD", Resolution.Minute).Symbol; 
+            // Requesting data
+            _bitcoinDataSymbol = AddData<BitcoinMetadata>(_btcSymbol).Symbol;
+
+            // Historical data
+            var history = History<BitcoinMetadata>(_bitcoinDataSymbol, 60, Resolution.Daily);
+            Debug($"We got {history.Count()} items from our history request for {_btcSymbol} Blockchain Bitcoin data");
         }
 
         /// <summary>
@@ -47,30 +56,23 @@ namespace QuantConnect.DataLibrary.Tests
         /// <param name="slice">Slice object keyed by symbol containing the stock data</param>
         public override void OnData(Slice slice)
         {
-            var data = slice.Get<MyCustomDataType>();
+            // Get data
+            var data = slice.Get<BitcoinMetadata>();
             if (!data.IsNullOrEmpty())
             {
-                // based on the custom data property we will buy or short the underlying equity
-                if (data[_customDataSymbol].SomeCustomProperty == "buy")
-                {
-                    SetHoldings(_equitySymbol, 1);
-                }
-                else if (data[_customDataSymbol].SomeCustomProperty == "sell")
-                {
-                    SetHoldings(_equitySymbol, -1);
-                }
-            }
-        }
+                var currentDemandSupply = data[_bitcoinDataSymbol].NumberofTransactions / data[_bitcoinDataSymbol].HashRate;
 
-        /// <summary>
-        /// Order fill event handler. On an order fill update the resulting information is passed to this method.
-        /// </summary>
-        /// <param name="orderEvent">Order event details containing details of the events</param>
-        public override void OnOrderEvent(OrderEvent orderEvent)
-        {
-            if (orderEvent.Status.IsFill())
-            {
-                Debug($"Purchased Stock: {orderEvent.Symbol}");
+                // comparing the average transaction-to-hash-rate ratio changes, we will buy bitcoin or hold cash
+                if (_lastDemandSupply != null && currentDemandSupply > _lastDemandSupply)
+                {
+                    SetHoldings(_btcSymbol, 1);
+                }
+                else
+                {
+                    SetHoldings(_btcSymbol, 0);
+                }
+
+                _lastDemandSupply = currentDemandSupply;
             }
         }
     }

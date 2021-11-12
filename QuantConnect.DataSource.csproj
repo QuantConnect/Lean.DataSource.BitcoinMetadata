@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>QuantConnect.DataSource</RootNamespace>
+    <AssemblyName>QuantConnect.DataSource.BitcoinMetadata</AssemblyName>
     <DocumentationFile>$(OutputPath)\QuantConnect.DataSource.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -19,9 +20,7 @@
     <None Remove="tests\**" />
     <Compile Remove="Demonstration.cs" />
     <None Remove=".gitignore" />
-    <None Remove="process.sample.ipynb" />
-    <None Remove="process.sample.py" />
-    <None Remove="process.sample.sh" />
+    <None Remove="process.py" />
   </ItemGroup>
 
 </Project>
