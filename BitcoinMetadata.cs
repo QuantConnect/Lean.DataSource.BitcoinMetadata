@@ -181,6 +181,7 @@ namespace QuantConnect.DataSource
                     Globals.DataFolder,
                     "alternative",
                     "blockchain",
+                    "bitcoinmetadata",
                     $"{config.Symbol.Value.ToLowerInvariant()}.csv"
                 ),
                 SubscriptionTransportMedium.LocalFile
