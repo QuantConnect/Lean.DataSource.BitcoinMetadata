@@ -305,8 +305,8 @@ namespace QuantConnect.DataSource
                 Estimated Transaction Volume USD {EstimatedTransactionVolumeUSD},
                 Estimated Transaction Volume {EstimatedTransactionVolume},
                 Total Output Volume {TotalOutputVolume},
-                Number of Transactionper Block {NumberofTransactionperBlock},
-                Number of UniqueBitcoin Addresses Used {NumberofUniqueBitcoinAddressesUsed},
+                Number of Transaction per Block {NumberofTransactionperBlock},
+                Number of Unique Bitcoin Addresses Used {NumberofUniqueBitcoinAddressesUsed},
                 Number of Transactions Excluding Popular Addresses {NumberofTransactionsExcludingPopularAddresses},
                 Total Number of Transactions {TotalNumberofTransactions},
                 Number of Transactions {NumberofTransactions},
@@ -314,8 +314,8 @@ namespace QuantConnect.DataSource
                 Total Transaction Fees {TotalTransactionFees},
                 Market Capitalization {MarketCapitalization},
                 Total Bitcoins {TotalBitcoins},
-                MyWalletNumberofTransactionPerDay {MyWalletNumberofTransactionPerDay},
-                MyWalletTransactionVolume {MyWalletTransactionVolume}";
+                My Wallet Number of Transaction Per Day {MyWalletNumberofTransactionPerDay},
+                My Wallet Transaction Volume {MyWalletTransactionVolume}";
         }
 
         /// <summary>
