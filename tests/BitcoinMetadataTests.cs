@@ -69,6 +69,38 @@ namespace QuantConnect.DataLibrary.Tests
             AssertAreEqual(expected, result);
         }
 
+        [Test]
+        public void ToStringTest()
+        {
+            var expected = CreateNewInstance();
+            var text = $@"{expected.Symbol} - Difficulty 100,
+                My Wallet Number of Users 10000,
+                Average Block Size 100,
+                Blockchain Size 300000,
+                Median Transaction Confirmation Time 0.01,
+                Miners Revenue 10,
+                Hash Rate 20,
+                Cost Per Transaction 0.01,
+                Cost Percent of Transaction Volume 0.005,
+                Estimated Transaction Volume USD 100000000,
+                Estimated Transaction Volume 20000,
+                Total Output Volume 2000,
+                Number of Transactionper Block 100,
+                Number of UniqueBitcoin Addresses Used 50000,
+                Number of Transactions Excluding Popular Addresses 10000,
+                Total Number of Transactions 10000000,
+                Number of Transactions 10000,
+                Total Transaction Fees USD 10000,
+                Total Transaction Fees 100,
+                Market Capitalization 3000000000,
+                Total Bitcoins 21000000,
+                MyWalletNumberofTransactionPerDay 1000,
+                MyWalletTransactionVolume 1000";
+            var result = expected.ToString();
+
+            AssertAreEqual(text, result);
+        }
+
         private void AssertAreEqual(object expected, object result, bool filterByCustomAttributes = false)
         {
             foreach (var propertyInfo in expected.GetType().GetProperties())
