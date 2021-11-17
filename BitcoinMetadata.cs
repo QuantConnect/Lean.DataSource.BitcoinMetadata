@@ -293,7 +293,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return @"{Symbol} - Difficulty {Difficulty},
+            return $@"{Symbol} - Difficulty {Difficulty},
                 My Wallet Number of Users {MyWalletNumberofUsers},
                 Average Block Size {AverageBlockSize},
                 Blockchain Size {BlockchainSize},
