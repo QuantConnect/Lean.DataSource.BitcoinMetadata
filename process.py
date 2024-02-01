@@ -4,7 +4,7 @@ import requests
 
 api = os.environ["QUANDL_API_KEY"]
 
-base_link = "https://data.nasdaq.com/api/v3/datasets/BCHAIN/"
+base_link = "https://data.nasdaq.com/api/v3/datatables/QDL/BCHAIN?"
 
 destination_folder = pathlib.Path('/temp-output-directory/alternative/blockchain/bitcoinmetadata')
 # objectives:# download data from API -> temp folder or in memory. Output processed data to /temp-output-directory/alternative/blockchain/symbol.csv
@@ -43,7 +43,7 @@ def download_blockchain_nasdaq():
 
         for data_name, data_code in Dict.items():
 
-            download_link = f"{base_link}{data_code}.csv?api_key={api}"
+            download_link = f"{base_link}&code={data_code}&api_key={api}"
 
             i = 1
             
@@ -51,21 +51,20 @@ def download_blockchain_nasdaq():
                 try:
                     # Fetch data
                     raw_data = requests.get(download_link, allow_redirects=True)
-                    content = raw_data.content.splitlines()[:0:-1]
+                    content = raw_data.json()['datatable']['data']
 
                     if not data:
+                        
                         for row in content:
-                            split_content = row.decode('utf-8').split(",")
-                            data[split_content[0]] = split_content[1]
+                            data[row[1]] = row[2]
 
                     else:
                         data_ = {}
-                        
+        
                         for row in content:
-                            split_content = row.decode('utf-8').split(",")
-                            data_[split_content[0]] = split_content[1]
+                            data_[row[1]] = row[2]
                             
-                        data = {k: data.get(k, '0') + "," + data_.get(k, '0') for k in set(data) | set(data_)}
+                        data = {k: str(data.get(k, '0')) + "," + str(data_.get(k, '0')) for k in set(data) | set(data_)}
                             
                     print(f"Downloaded '{data_name}' successfully")
                     break 
@@ -82,6 +81,6 @@ def download_blockchain_nasdaq():
         data = sorted(data.items(), key=lambda x: x[0])
 
         for date, value in data:
-            csv_file.write(date + "," + value + '\n')
+            csv_file.write(date + "," + str(value) + '\n')
                     
 download_blockchain_nasdaq()
